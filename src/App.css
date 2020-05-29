@@ -1,38 +1,81 @@
+:root {
+
+  /* FONTS */
+  --primary-font: "Montserrat", sans-serif;
+  --secondary-font: "Poppins", sans-serif;
+
+  /* COLOURS */
+  --primary-colour: #333;
+  --secondary-colour: #5a32aa;
+  --tertiary-colour: #aa2346;
+  --quaternary-colour: #82aa32;
+  --quinary-colour: #32aa96;
+
+
+  /* MEDIA QUERIES */
+  --mq-mob: 480px;
+  --mq-mob--sml: 375px;
+  --mq-mob--med: 560px;
+  --mq-mob--lrg: 640px;
+
+  --mq-tab: 768px;
+  --mq-tab--sml: 765px;
+  --mq-tab--lrg: 820px;
+
+  --mq-desk: 960px;
+  --mq-desk--med: 1024px;
+  --mq-desk--lrg: 1120px;
+  --mq-desk--xlrg: 1400px;
+
+}
+
+
+
+button {
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+  transition: all 0.25s;
+}
+
 .App {
-  text-align: center;
+  text-align: left;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* OBJECTS */
+/* 1460px the bigger container */
+/* 1320px the normal container */
+
+.o-container {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  
+  @media screen and (min-width: 1440px) {
+    padding: 0;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.o-container--small {
+  max-width: 670px;
 }
 
-.App-link {
-  color: #61dafb;
+.o-container--large {
+  max-width: 1460px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+.o-container--full {
+  max-width: 100%;
+}
+
+.o-container--medium {
+  max-width: --mq-tab--lrg;
+  
+  @media screen and ( max-width: var(--mq-tab--lrg)) {     
+      padding: 0 20px;
   }
 }
