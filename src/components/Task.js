@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Draggable } from "react-beautiful-dnd";
 
 const TaskContent = styled.div`
     background: white;
@@ -15,11 +16,17 @@ const Header = styled.p`
 
 
 const task = (props) => (
-    <TaskContent>
-        <Header>
-            {props.children}
-        </Header>
-    </TaskContent>
+    <Draggable draggableId={String(props.id)} index={props.task} >
+        {provided => (
+            <TaskContent ref={provided.innerRef}  {...provided.draggableProps} {...provided.dragHandleProps}>
+                <Header>
+                    {props.children}
+                </Header>
+            </TaskContent>
+            )
+        }
+
+    </Draggable>
 );
 
 export default task;

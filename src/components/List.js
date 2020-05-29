@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import NewTaskForm from './NewTask';
+import { Droppable } from 'react-beautiful-dnd';
 
 
 const ListContent = styled.div`
@@ -55,20 +56,28 @@ const List = (props) => {
     };
 
     return(
-        <ListContent>
+        <Droppable droppableId={ String(props.board+"-"+props.list) }>
+            {provided => (
+                <ListContent 
+                    {...provided.droppableProps} 
+                    ref={provided.innerRef}
+                >
 
-            <Header>
-                {props.title}
-            </Header>
+                    <Header>
+                        {props.title}
+                    </Header>
 
-            {props.children}
+                    {props.children}
 
-            { taskFormVisible 
-                ? <NewTaskForm addTask={addTask}/>
-                : <AddNewTaskButton onClick={onAddTask}>Add new task</AddNewTaskButton>
-            }
-
-        </ListContent>
+                    { taskFormVisible 
+                        ? <NewTaskForm addTask={addTask}/>
+                        : <AddNewTaskButton onClick={onAddTask}>Add new task</AddNewTaskButton>
+                    }
+                    {provided.placeholder}
+                </ListContent>
+            )}
+            
+        </Droppable>
     )
 };
 
