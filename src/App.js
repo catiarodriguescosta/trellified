@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import Navbar from './components/Navbar';
 import './App.css';
 import styled from 'styled-components';
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 import Board from './components/Board';
 import List from './components/List';
@@ -25,25 +24,6 @@ const GeneralButton = styled.button`
     }
 `
 
-
-export const sort = (
-  droppableIdStart,
-  droppableIdEnd,
-  droppableIndexStart,
-  droppableIndexEnd,
-  droppableId
-) => {
-  return {
-    type: "DRAG_HAPPENED",
-    payload: {
-      droppableIdStart,
-      droppableIdEnd,
-      droppableIndexStart,
-      droppableIndexEnd,
-      droppableId
-    }
-  }
-}
 
 function App() {
 
@@ -88,7 +68,7 @@ function App() {
                     <List key={boardIndex + "-" + listIndex} title= {list.name}  board={boardIndex} list={listIndex} newDataRead={newDataRead}>
                       { list.tasks.map( (task, taskIndex) =>{
                           return (
-                            <Task key={boardIndex + "-" + listIndex+ "-" + taskIndex}  board={boardIndex} list={listIndex} task={taskIndex}  id={boardIndex + "-" + listIndex+ "-" + taskIndex}>
+                            <Task key={boardIndex + "-" + listIndex+ "-" + taskIndex}  board={boardIndex} list={listIndex} task={taskIndex}>
                               {task.name}
                             </Task>
                           )
@@ -137,48 +117,23 @@ function App() {
   };
 
 
-  const onDragEnd = (props, result) => {
-    const {destination, source, draggableId} = result;
-    if (!destination) {
-      return;
-    }
-    props.dispatch(
-      sort(
-        source.droppableId,
-        destination.droppableId,
-        source.index,
-        destination.index,
-        draggableId
-      )
-    )
-    
-  };
-
-/*   const export= () =>{
-    //TODO
-  }
-
-  const import= () =>{
-    //TODO
-  } */
-
 
   return (
     <div className="App">
       <Navbar/>
       <div className="o-container">
-        <DragDropContext onDragEnd={onDragEnd}>
-          { BoardFormVisible 
-            ? <NewBoardForm addBoard={addBoard}/>
-            : <ButtonsGroup>
-                <GeneralButton onClick={onAddBoard}>Add new board</GeneralButton>   
-                <GeneralButton >Export Data</GeneralButton>
-                <GeneralButton >Import Data</GeneralButton>
-              </ButtonsGroup>
-          }
+        
+        { BoardFormVisible 
+          ? <NewBoardForm addBoard={addBoard}/>
+          : <ButtonsGroup>
+              <GeneralButton onClick={onAddBoard}>Add new board</GeneralButton>   
+              <GeneralButton >Export Data</GeneralButton>
+              <GeneralButton >Import Data</GeneralButton>
+            </ButtonsGroup>
+        }
 
-          {newDataRead(data)}
-        </DragDropContext>
+        {newDataRead(data)}
+        
       </div>
     </div>
   );
