@@ -33,6 +33,7 @@ function DragNDrop({data}) {
                 let newList = JSON.parse(JSON.stringify(oldList));
                 newList.boards[params.boardIndex].lists[params.listIndex].tasks.splice(params.taskIndex, 0, newList.boards[currentItem.boardIndex].lists[currentItem.listIndex].tasks.splice(currentItem.taskIndex, 1)[0]);
                 dragItem.current = params;
+                window.localStorage.setItem("data", JSON.stringify(newList) );
                 return newList;
             })
         }

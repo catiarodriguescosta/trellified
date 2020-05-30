@@ -31,18 +31,11 @@ function App() {
           {name:"List 1", tasks: 
               []
           },
-          {name:"List 2", tasks: 
-              []
-          },
-          {name:"List 3", tasks: 
-              []
-          },
         ]
       },
     ]
   };
 
-  
   let data = {};
   if ( !localStorage.getItem('data') ) {
     data = {...initial};
@@ -52,8 +45,6 @@ function App() {
     data = JSON.parse(window.localStorage.getItem("data"));
   }
   
-
-
   const [BoardFormVisible, setBoardFormVisible] = useState(false);
 
   const addBoard = text => { 
@@ -62,13 +53,7 @@ function App() {
           { name: text, lists: [
                   {name:"List 1", tasks: 
                       []
-                  },
-                  {name:"List 2", tasks: 
-                      []
-                  },
-                  {name:"List 3", tasks: 
-                      []
-                  },
+                  },  
               ] 
           }
       );
