@@ -3,11 +3,8 @@ import Navbar from './components/Navbar';
 import './App.css';
 import styled from 'styled-components';
 
-import Board from './components/Board';
-import List from './components/List';
-import Task from './components/Task';
 import NewBoardForm from './components/NewBoard';
-
+import DragNDrop from './components/DragNDrop';
 
 const ButtonsGroup= styled.div`
     display: flex;
@@ -56,36 +53,6 @@ function App() {
   }
   
 
-  const newDataRead = (data) => {
-    return (
-      <>
-      { 
-        data.boards.map( (board, boardIndex) => {
-          return (
-            <Board key={boardIndex} title={board.name} board={boardIndex}>
-              { board.lists.map( (list, listIndex) => {
-                  return (
-                    <List key={boardIndex + "-" + listIndex} title= {list.name}  board={boardIndex} list={listIndex} newDataRead={newDataRead}>
-                      { list.tasks.map( (task, taskIndex) =>{
-                          return (
-                            <Task key={boardIndex + "-" + listIndex+ "-" + taskIndex}  board={boardIndex} list={listIndex} task={taskIndex}>
-                              {task.name}
-                            </Task>
-                          )
-                        })
-                      }
-                    </List>
-                  )
-                }) 
-              }
-            </Board>
-          )
-        })
-      }
-      </>
-    )
-  }
-
 
   const [BoardFormVisible, setBoardFormVisible] = useState(false);
 
@@ -123,6 +90,7 @@ function App() {
       <Navbar/>
       <div className="o-container">
         
+
         { BoardFormVisible 
           ? <NewBoardForm addBoard={addBoard}/>
           : <ButtonsGroup>
@@ -132,8 +100,9 @@ function App() {
             </ButtonsGroup>
         }
 
-        {newDataRead(data)}
-        
+
+        <DragNDrop data={data} />
+
       </div>
     </div>
   );
