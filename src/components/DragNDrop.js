@@ -8,7 +8,7 @@ import NewBoardForm from './NewBoard';
 import { DataContext } from "../context/data-context";
 
 
-const ButtonsGroup= styled.div`
+const ButtonsGroup = styled.div`
     display: flex;
 `
 
@@ -31,24 +31,20 @@ function DragNDrop() {
     const dragNode = useRef();
 
     const handleDragStart = (e, params) =>{
-        console.log('drag starting', params);
         dragItem.current = params;
         dragNode.current = e.target;
         dragNode.current.addEventListener("dragend", handleDragEnd)
         setDragging(true);
     } 
     const handleDragEnd = () =>{
-        console.log("ending drag");
         setDragging(false);
         dragNode.current.removeEventListener("dragend", handleDragEnd)
         dragItem.current = null;
         dragNode.current = null;
     }
     const handleDragEnter = (e, params) =>{
-        console.log("drag enter", params);
         const currentItem= dragItem.current;
         if (e.target !== dragNode.current) {
-            console.log("target is not the same");
             setDataList( oldList => {
                 let newList = JSON.parse(JSON.stringify(oldList));
                 newList.boards[params.boardIndex].lists[params.listIndex].tasks.splice(params.taskIndex, 0, newList.boards[currentItem.boardIndex].lists[currentItem.listIndex].tasks.splice(currentItem.taskIndex, 1)[0]);
@@ -86,9 +82,7 @@ function DragNDrop() {
         { BoardFormVisible 
           ? <NewBoardForm addBoard={addBoard}/>
           : <ButtonsGroup>
-              <GeneralButton onClick={onAddBoard}>Add new board</GeneralButton>   
-              <GeneralButton >Export Data</GeneralButton>
-              <GeneralButton >Import Data</GeneralButton>
+              <GeneralButton onClick={onAddBoard}>Add new board</GeneralButton>
             </ButtonsGroup>
         }
 

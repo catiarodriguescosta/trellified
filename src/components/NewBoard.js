@@ -4,15 +4,21 @@ import styled from 'styled-components';
 
 const Form = styled.form`
   display: flex;
-  margin: 0 0 0 20px;
+  margin: 0;
 `
 
 const SubmitButton = styled.button`
     border: 1px solid var(--quaternary-colour);
     background: var(--quaternary-colour);
-    color: var(--primary-colour);
+    color: white;
     text-transforn: uppercase;
     font-size: 14px;
+    margin: 0 10px;
+
+    :hover {
+      color: var(--quaternary-colour);
+      background: white;
+    }
 `
 
 const NewBoard = ({addBoard}) => {

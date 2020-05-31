@@ -28,7 +28,7 @@ const AddNewListButton = styled.button`
     }
 `
 
-const BoardArea =styled.div`
+const BoardArea = styled.div`
     display: flex;
     flex-direction: row;
     overflow-y: scroll; 
