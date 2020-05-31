@@ -1,11 +1,31 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import Board from './Board';
 import List from './List';
 import Task from './Task';
 
-function DragNDrop({data}) {
+import styled from 'styled-components';
+import NewBoardForm from './NewBoard';
+import { DataContext } from "../context/data-context";
 
-    const [dataList, setDataList] = useState(data);
+
+const ButtonsGroup= styled.div`
+    display: flex;
+`
+
+const GeneralButton = styled.button`
+    border: 1px solid var(--tertiary-colour);
+    color: var(--tertiary-colour);
+    font-size: 14px;
+    margin-right: 20px;
+    :hover{
+      color: white;
+      background: var(--tertiary-colour);
+    }
+`
+
+function DragNDrop() {
+
+    const [dataList, setDataList] = useContext(DataContext);
     const [dragging, setDragging] = useState(false);
     const dragItem = useRef();
     const dragNode = useRef();
@@ -40,8 +60,38 @@ function DragNDrop({data}) {
 
     }
 
+    const [BoardFormVisible, setBoardFormVisible] = useState(false);
+
+    const addBoard = text => { 
+
+        setDataList( oldList => {
+            let newList = JSON.parse(JSON.stringify(oldList));
+            newList.boards.unshift(
+                { name: text, lists: [ {name:"List 1", tasks: []}, ] }
+            );
+            window.localStorage.setItem("data", JSON.stringify(newList) );
+            return newList;
+        })
+
+        setBoardFormVisible(false);
+    };
+
+    const onAddBoard = event => {
+        setBoardFormVisible(true);
+    };
+
     return (
         <>
+
+        { BoardFormVisible 
+          ? <NewBoardForm addBoard={addBoard}/>
+          : <ButtonsGroup>
+              <GeneralButton onClick={onAddBoard}>Add new board</GeneralButton>   
+              <GeneralButton >Export Data</GeneralButton>
+              <GeneralButton >Import Data</GeneralButton>
+            </ButtonsGroup>
+        }
+
         {
             dataList.boards.map( (board, boardIndex) => {
               return (

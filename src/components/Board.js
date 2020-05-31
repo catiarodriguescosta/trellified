@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import styled from 'styled-components';
 import NewListForm from './NewList';
+import { DataContext } from "../context/data-context";
 
 const BoardSection= styled.section`
     margin-bottom: 100px;
@@ -9,6 +10,7 @@ const BoardHeader= styled.div`
     display: flex;
     align-items: center;
 `
+
 const BoardTitle = styled.h1`
     font-family: var(--secondary-font);
     font-weight: 700;
@@ -35,16 +37,19 @@ const BoardArea =styled.div`
 
 const Board = (props) => {
 
+    const [dataList, setDataList] = useContext(DataContext);
+
     const addList = text => {
         
-        const board= props.board;   
-
-        let retrievedObject = JSON.parse(window.localStorage.getItem("data"));
-        retrievedObject.boards[board].lists.push({ name: text, tasks: [] });
-        window.localStorage.setItem("data", JSON.stringify(retrievedObject) );
+        const board= props.board;           
+        setDataList( oldList => {
+            let newList = JSON.parse(JSON.stringify(oldList));
+            newList.boards[board].lists.push({ name: text, tasks: [] });
+            window.localStorage.setItem("data", JSON.stringify(newList) );
+            return newList;
+        })
         setListFormVisible(false);
-        window.location.reload(false);
-        
+
     };
 
     const [listFormVisible, setListFormVisible] = useState(false); 

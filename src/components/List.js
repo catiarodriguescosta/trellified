@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import NewTaskForm from './NewTask';
+import { DataContext } from "../context/data-context";
 
 
 const ListContent = styled.div`
@@ -35,17 +36,18 @@ const AddNewTaskButton = styled.button`
 
 const List = (props) => {
 
+    const [dataList, setDataList] = useContext(DataContext);
+
     const addTask = text => {
-        
         const board= props.board;
         const list = props.list;    
-
-        let retrievedObject = JSON.parse(window.localStorage.getItem("data"));
-        retrievedObject.boards[board].lists[list].tasks.push({ name: text });
-        window.localStorage.setItem("data", JSON.stringify(retrievedObject) );
+        setDataList( oldList => {
+            let newList = JSON.parse(JSON.stringify(oldList));
+            newList.boards[board].lists[list].tasks.push({ name: text });
+            window.localStorage.setItem("data", JSON.stringify(newList) );
+            return newList;
+        })
         setTaskFormVisible(false);
-        window.location.reload(false);
-        
     };
 
     const [taskFormVisible, setTaskFormVisible] = useState(false); 

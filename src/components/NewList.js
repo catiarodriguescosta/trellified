@@ -33,7 +33,7 @@ const NewList = ({addList}) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <input type="text" style={{fontSize: "14px", width: "auto", border: "0", padding: "0px 10px", border: "1px solid var(--primary-colour)" }}
+      <input type="text" style={{fontSize: "14px", width: "auto", padding: "0px 10px", border: "1px solid var(--primary-colour)" }}
         value={value}
         onChange={e => setValue(e.target.value)}
       /><br />
